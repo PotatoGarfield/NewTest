@@ -1,0 +1,69 @@
+/* 控制 carousel 的大小来实现适配 */
+.carousel {
+  max-width  : 400px;
+  height     : 230px;
+  /* 禁止选中文字 */
+  user-select: none;
+}
+
+.carousel .panels {
+  position: relative;
+  height  : calc(100% - 30px);
+}
+
+.carousel .panels>a {
+  position: absolute;
+  height  : 100%;
+  width   : 100%;
+  z-index : 1;
+}
+
+.carousel .panels>a:first-child {
+  z-index: 10;
+}
+
+/* 子标签  height: 100% 那么父标签也应该规定 height 否则 子元素 height 不生效*/
+.carousel .panels img {
+  width     : 100%;
+  height    : 100%;
+  /* 使图片保持原有比例填充整个空间 */
+  object-fit: cover;
+}
+
+.carousel .action {
+  display   : flex;
+  font-size : 12px;
+  color     : #999;
+  height    : 30px;
+  margin-top: 8px;
+}
+
+.carousel .action .pre {
+  order : 1;
+  cursor: pointer;
+}
+
+.carousel .action .next {
+  order : 3;
+  cursor: pointer;
+}
+
+.carousel .dots {
+  order     : 2;
+  flex      : 1;
+  text-align: center;
+}
+
+.carousel .dots>span {
+  display         : inline-block;
+  width           : 6px;
+  height          : 4px;
+  border-radius   : 2px;
+  background-color: #ddd;
+  cursor          : pointer;
+}
+
+.carousel .dots>span.active {
+  width           : 10px;
+  background-color: #aaa;
+}
