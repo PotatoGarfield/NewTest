@@ -15,6 +15,9 @@ class Carousel {
     this.pre = root.querySelector('.pre');
     this.next = root.querySelector('.next');
 
+    // 节流，防止多次快速点击“上下页”
+    this.flag = true;
+
     this.bind();
   }
 
@@ -59,12 +62,22 @@ class Carousel {
 
     // 点击上一页的方法监听
     this.pre.onclick = e => {
-      this.changeImg(this.preIndex, this.index);
+      if (this.flag){
+        this.flag = false;
+        this.changeImg(this.preIndex, this.index);
+      } else {
+        return;
+      }
     }
 
     // 点击上一页的方法监听
     this.next.onclick = e => {
-      this.changeImg(this.nextIndex, this.index);
+      if (this.flag){
+        this.flag = false;
+        this.changeImg(this.nextIndex, this.index);
+      } else {
+        return;
+      }
     }
   }
 
@@ -77,11 +90,15 @@ class Carousel {
       // 小点动效
       this.dots.forEach(dot => dot.classList.remove('active'));
       this.dots[toIndex].classList.add('active');
+      // 节流归位
+      this.flag = true;
     });
   }
 }
 
-// 渐变动效
+/* 
+  渐变动效
+*/
 function fade(fromNode, toNode, onFinish) {
   let opacityOffset1 = 1;
   let opacityOffset2 = 0;
@@ -117,4 +134,73 @@ function fade(fromNode, toNode, onFinish) {
   toNodeAnimation();
 }
 
-document.querySelectorAll('.carousel').forEach(e => new Carousel(e, fade));
+/* 
+  平移动效
+*/
+function slide(fromNode, toNode, onFinish) {
+  fromNode.style.zIndex = 10;
+  toNode.style.zIndex = 10;
+
+  let width = parseInt(getComputedStyle(fromNode).width);
+  let offsetX = width;
+  let offset1 = 0;
+  let offset2 = 0;
+  let step = 10;
+
+  // 向左平移
+  function fromNodeAnimation() {
+    if (offset1 < offsetX) {
+      fromNode.style.left = parseInt(getComputedStyle(fromNode).left) - step + 'px';
+      offset1 += step;
+      requestAnimationFrame(fromNodeAnimation);
+    }
+  }
+  function toNodeAnimation() {
+    if (offset2 < offsetX) {
+      toNode.style.left = parseInt(getComputedStyle(toNode).left) - step + 'px';
+      offset2 += step;
+      requestAnimationFrame(toNodeAnimation);
+    } else {
+      fromNode.style.left = 0;
+      toNode.style.left = 0;
+      onFinish();
+    }
+  }
+
+  // 向右平移
+  function fromNodeAnimation2() {
+    if (offset1 < offsetX) {
+      fromNode.style.left = parseInt(getComputedStyle(fromNode).left) + step + 'px';
+      offset1 += step;
+      requestAnimationFrame(fromNodeAnimation2);
+    }
+  }
+  function toNodeAnimation2() {
+    if (offset2 < offsetX) {
+      console.log(offset2);
+      toNode.style.left = parseInt(getComputedStyle(toNode).left) + step + 'px';
+      offset2 += step;
+      requestAnimationFrame(toNodeAnimation2);
+    } else {
+      fromNode.style.left = 0;
+      toNode.style.left = 0;
+      onFinish();
+    }
+  }
+
+  // 根据 index 计算偏移方向
+  if (this.panels.indexOf(fromNode) < this.panels.indexOf(toNode)) {
+    // 将下一个面板放到当前面板的右边
+    toNode.style.left = width + 'px';
+    fromNodeAnimation();
+    toNodeAnimation();
+  }
+  if (this.panels.indexOf(fromNode) > this.panels.indexOf(toNode)) {
+    // 将下一个面板放到当前面板的左边
+    toNode.style.left = - width + 'px';
+    fromNodeAnimation2();
+    toNodeAnimation2();
+  }
+}
+
+document.querySelectorAll('.carousel').forEach(e => new Carousel(e, slide));

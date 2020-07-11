@@ -1,3 +1,5 @@
+/* 第一版简单的实现 */
+
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 

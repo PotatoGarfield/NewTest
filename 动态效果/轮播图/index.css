@@ -4,6 +4,8 @@
   height     : 230px;
   /* 禁止选中文字 */
   user-select: none;
+  margin     : 0 auto;
+  overflow   : hidden;
 }
 
 .carousel .panels {
