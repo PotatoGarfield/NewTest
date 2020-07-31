@@ -1,0 +1,17 @@
+.user-info {
+  flex: 0 0 auto;
+  margin-right: 2.4rem;
+  width: 7.5rem;
+  height: 7.5rem;
+  background-image: url('./123.png');
+  background-position: center;
+  border-radius: 50%
+}
+
+.user-info:hover {
+  transform: rotate(666turn);
+  transition-delay: 1s;
+  transition-property: all;
+  transition-duration: 59s;
+  transition-timing-function: cubic-bezier(.34, 0, .84, 1)
+}
