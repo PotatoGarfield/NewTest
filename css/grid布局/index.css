@@ -1,0 +1,37 @@
+html,body{
+  margin: 0;
+  border: 0;
+}
+
+.main {
+  display              : grid;
+  color                : white;
+  font-size            : 200%;
+  /*  声明列的宽度  */
+  grid-template-columns: repeat(2,  49.5%);
+  /*  声明行间距和列间距  */
+  grid-gap             : 1%;
+  /* 行kuaikuai */
+}
+
+.one {
+  background-color: aquamarine;
+}
+
+.two {
+  background-color: rgb(174, 255, 127);
+}
+
+.three {
+  background-color: rgb(127, 161, 255);
+}
+
+.four {
+  background-color: rgb(193, 127, 255);
+}
+
+.item {
+  text-align: center;
+  /* width  :100px; */
+  /* height : 100px; */
+}
