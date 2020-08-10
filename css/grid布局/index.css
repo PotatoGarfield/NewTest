@@ -11,7 +11,6 @@ html,body{
   grid-template-columns: repeat(2,  49.5%);
   /*  声明行间距和列间距  */
   grid-gap             : 1%;
-  /* 行kuaikuai */
 }
 
 .one {
@@ -32,6 +31,5 @@ html,body{
 
 .item {
   text-align: center;
-  /* width  :100px; */
   /* height : 100px; */
 }
